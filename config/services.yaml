@@ -1,0 +1,33 @@
+parameters:
+    parking.booking_expiry_minutes: '%env(int:PARKING_BOOKING_EXPIRY_MINUTES)%'
+    parking.default_hourly_rate:    '%env(float:PARKING_DEFAULT_HOURLY_RATE)%'
+
+services:
+    # Default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Makes classes in src/ available as services
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # Inject booking expiry minutes into BookingService
+    App\Service\BookingService:
+        arguments:
+            $expiryMinutes: '%parking.booking_expiry_minutes%'
+
+    # Named logger channels
+    App\Service\ParkingService:
+        arguments:
+            $logger: '@monolog.logger.parking'
+
+    App\EventListener\JWTCreatedListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
