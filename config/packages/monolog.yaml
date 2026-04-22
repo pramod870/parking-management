@@ -40,4 +40,3 @@ when@prod:
                 path: "%kernel.logs_dir%/security.log"
                 level: info
                 channels: [security]
-

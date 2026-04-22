@@ -197,7 +197,7 @@ All protected endpoints require: `Authorization: Bearer <JWT_TOKEN>`
 | PUT    | /api/admin/users/{id} | Admin  | Update role      |
 | DELETE | /api/admin/users/{id} | Admin  | Deactivate user  |
 
----
+--
 
 ## 📥 Sample Requests & Responses
 
